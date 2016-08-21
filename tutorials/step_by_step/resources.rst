@@ -44,7 +44,7 @@ Typically, every object in Godot (Node, Resource, or anything else) can
 export properties, properties can be of many types (like a string,
 integer, Vector2, etc) and one of those types can be a resource. This
 means that both nodes and resources can contain resources as properties.
-To make it a litle more visual:
+To make it a little more visual:
 
 .. image:: /img/nodes_resources.png
 
@@ -132,7 +132,7 @@ Freeing resources
 
 Resource extends from :ref:`Reference <class_Reference>`.
 As such, when a resource is no longer in use, it will automatically free
-itelf. Since, in most cases, Resources are contained in Nodes, scripts
+itself. Since, in most cases, Resources are contained in Nodes, scripts
 or other resources, when a node is removed or freed, all the children
 resources are freed too.
 

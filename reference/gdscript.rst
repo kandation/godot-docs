@@ -6,14 +6,15 @@ GDScript
 Introduction
 ------------
 
-GDScript is a high level, dynamically typed programming language used to
-create content. It uses a syntax that is very similar to the Python
-language (blocks are indent-based) and its goal is to be very optimal
-and tightly integrated with the engine, allowing great flexibility for
-content creation and integration.
+*GDScript* is a high level, dynamically typed programming language used to
+create content. It uses a syntax similar to 
+`Python <https://en.wikipedia.org/wiki/Python_%28programming_language%29>`_ 
+(blocks are indent-based and many keywords are similar). Its goal is 
+to be optimized for and tightly integrated with Godot Engine, allowing great
+flexibility for content creation and integration.
 
 History
--------
+~~~~~~~
 
 Initially, Godot was designed to support multiple scripting languages
 (this ability still exists today). However, only GDScript is in use
@@ -27,32 +28,32 @@ enormous amount of code. After some experiments with
 
 The last third party scripting language that was used for shipped games
 was `Squirrel <http://squirrel-lang.org>`__, but it was dropped as well.
-At that point, it became evident that Godot would work more optimally by
-using a built-in scripting language, as the following barriers were met:
+At that point, it became evident that a custom scripting language could 
+more optimally make use of Godot's particular architecture:
 
--  Godot embeds scripts in nodes, most languages are not designed with
+-  Godot embeds scripts in nodes. Most languages are not designed with
    this in mind.
--  Godot uses several built-in data types for 2D and 3D math, script
+-  Godot uses several built-in data types for 2D and 3D math. Script
    languages do not provide this, and binding them is inefficient.
 -  Godot uses threads heavily for lifting and initializing data from the
-   net or disk, script interpreters for common languages are not
+   net or disk. Script interpreters for common languages are not
    friendly to this.
 -  Godot already has a memory management model for resources, most
-   script languages provide their own, which resulted in duplicate
+   script languages provide their own, which results in duplicate
    effort and bugs.
 -  Binding code is always messy and results in several failure points,
    unexpected bugs and generally low maintainability.
 
-Finally, GDScript was written as a custom solution. The language and
-interpreter for it ended up being smaller than the binding code itself
-for Lua and Squirrel, and equally as functional. With time, having a
+The result of these considerations is *GDScript*. The language and
+interpreter for GDScript ended up being smaller than the binding code itself
+for Lua and Squirrel, while having equal functionality. With time, having a
 built-in language has proven to be a huge advantage.
 
-Example
--------
+Example of GDScript
+~~~~~~~~~~~~~~~~~~~
 
 Some people can learn better by just taking a look at the syntax, so
-here's a simple example of how it looks.
+here's a simple example of how GDScript looks.
 
 ::
 
@@ -101,7 +102,7 @@ here's a simple example of how it looks.
         return local_var2
 
 
-    # subclass
+    # inner class
 
     class Something:
         var a = 10
@@ -114,11 +115,15 @@ here's a simple example of how it looks.
         print(lv.a)
 
 If you have previous experience with statically typed languages such as
-C, C++, or C# but never used a dynamically typed one, it is advised you
+C, C++, or C# but never used a dynamically typed one before, it is advised you
 read this tutorial: :ref:`doc_gdscript_more_efficiently`.
 
 Language
 --------
+
+In the following, an overview is given to GDScript. Details, such as which 
+methods are available to arrays or other objects, should be looked up in
+the linked class descriptions. 
 
 Identifiers
 ~~~~~~~~~~~
@@ -133,6 +138,58 @@ Keywords
 
 The following is the list of keywords supported by the language. Since
 keywords are reserved words (tokens), they can't be used as identifiers.
+
++------------+---------------------------------------------------------------------------------------------------------------+
+|  Keyword   | Description                                                                                                   |
++============+===============================================================================================================+
+| if         | See `if/else/elif`_.                                                                                          |
++------------+---------------------------------------------------------------------------------------------------------------+
+| elif       | See `if/else/elif`_.                                                                                          |
++------------+---------------------------------------------------------------------------------------------------------------+
+| else       | See `if/else/elif`_.                                                                                          |
++------------+---------------------------------------------------------------------------------------------------------------+
+| for        | See for_.                                                                                                     |
++------------+---------------------------------------------------------------------------------------------------------------+
+| do         | Reserved for future implementation of do...while loops.                                                       |
++------------+---------------------------------------------------------------------------------------------------------------+
+| while      | See while_.                                                                                                   |
++------------+---------------------------------------------------------------------------------------------------------------+
+| switch     | Reserved for future implementation.                                                                           |
++------------+---------------------------------------------------------------------------------------------------------------+
+| case       | Reserved for future implementation.                                                                           |
++------------+---------------------------------------------------------------------------------------------------------------+
+| break      | Exits the execution of the current ``for`` or ``while`` loop.                                                 |
++------------+---------------------------------------------------------------------------------------------------------------+
+| continue   | Immediately skips to the next iteration of the ``for`` or ``while`` loop.                                     |
++------------+---------------------------------------------------------------------------------------------------------------+
+| pass       | Used where a statement is required syntactically but execution of code is undesired, e.g. in empty functions. |
++------------+---------------------------------------------------------------------------------------------------------------+
+| return     | Returns a value from a function.                                                                              |
++------------+---------------------------------------------------------------------------------------------------------------+
+| class      | Defines a class.                                                                                              |
++------------+---------------------------------------------------------------------------------------------------------------+
+| extends    | Defines what class to extend with the current class. Also tests whether a variable extends a given class.     |
++------------+---------------------------------------------------------------------------------------------------------------+
+| tool       | Executes the script in the editor.                                                                            |
++------------+---------------------------------------------------------------------------------------------------------------+
+| signal     | Defines a signal.                                                                                             |
++------------+---------------------------------------------------------------------------------------------------------------+
+| func       | Defines a function.                                                                                           |
++------------+---------------------------------------------------------------------------------------------------------------+
+| static     | Defines a static function. Static member variables are not allowed.                                           |
++------------+---------------------------------------------------------------------------------------------------------------+
+| const      | Defines a constant.                                                                                           |
++------------+---------------------------------------------------------------------------------------------------------------+
+| var        | Defines a variable.                                                                                           |
++------------+---------------------------------------------------------------------------------------------------------------+
+| onready    | Initializes a variable once the Node the script is attached to and its children are part of the scene tree.   |
++------------+---------------------------------------------------------------------------------------------------------------+
+| export     | Saves a variable along with the resource it's attached to and makes it visible and modifiable in the editor.  |
++------------+---------------------------------------------------------------------------------------------------------------+
+| setget     | Defines setter and getter functions for a variable.                                                           |
++------------+---------------------------------------------------------------------------------------------------------------+
+| breakpoint | Editor helper for debugger breakpoints.                                                                       |
++------------+---------------------------------------------------------------------------------------------------------------+
 
 Operators
 ~~~~~~~~~
@@ -207,14 +264,16 @@ considered a comment.
 
     # This is a comment
 
-Multi-line comments can be created using """ (three quotes in a row) at
-the beginning and end of a block of text.
-
-::
-
-    """ Everything on these 
-    lines is considered
-    a comment """
+..  Uncomment me if/when https://github.com/godotengine/godot/issues/1320 gets fixed
+    
+    Multi-line comments can be created using """ (three quotes in a row) at
+    the beginning and end of a block of text.
+    
+    ::
+    
+        """ Everything on these 
+        lines is considered
+        a comment """
 
 Built-in types
 --------------
@@ -227,8 +286,8 @@ A variable in GDScript can be assigned to several built-in types.
 null
 ^^^^
 
-null is a data type that contains no information, nothing assigned, and
-it's just empty. It can only be set to one value: ``null``.
+``null`` is an empty data type that contains no information and can not
+be assigned any other value. 
 
 bool
 ^^^^
@@ -249,8 +308,10 @@ Used to contain a floating point value (real numbers).
 :ref:`String <class_String>`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A sequence of characters in Unicode format. Strings can contain the
-standard C escape sequences.
+A sequence of characters in `Unicode format <https://en.wikipedia.org/wiki/Unicode>`_. Strings can contain the
+`standard C escape sequences <https://en.wikipedia.org/wiki/Escape_sequences_in_C>`_.
+GDScript supports :ref:`format strings aka printf functionality
+<doc_gdscript_printf>`.
 
 Vector built-in types
 ~~~~~~~~~~~~~~~~~~~~~
@@ -356,23 +417,34 @@ Container built-in types
 :ref:`Array <class_Array>`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Generic sequence of objects. Its size can be changed to anything and
-starts from index 0.
+Generic sequence of arbitrary object types, including other arrays or dictionaries (see below). 
+The array can resize dynamically. Arrays are indexed starting from index ``0``.
+Starting with Godot 2.1, indices may be negative like in Python, to count from the end.
 
 ::
 
     var arr=[]
     arr=[1, 2, 3]
-    arr[0] = "Hi!"
+    var b = arr[1]            # this is 2
+    var c = arr[arr.size()-1] # this is 3
+    var d = arr[-1]           # same as the previous line, but shorter
+    arr[0] = "Hi!"            # replacing value 1 with "Hi"
+    arr.append(4)             # array is now ["Hi", 2, 3, 4]
 
-Arrays are allocated linearly in memory, so they are fast, but very
-large arrays (more than tens of thousands of elements) may cause
-fragmentation.
+GDScript arrays are allocated linearly in memory for speed. Very
+large arrays (more than tens of thousands of elements) may however cause
+memory fragmentation. If this is a concern special types of 
+arrays are available. These only accept a single data type. They avoid memory 
+fragmentation and also use less memory but are atomic and tend to run slower than generic
+arrays. They are therefore only recommended to use for very large data sets: 
 
-There are specialized arrays (listed below) for some built-in data types
-which do not suffer from this and use less memory, but they are atomic
-and generally run a little slower, so they are only justified for very
-large amount of data.
+- :ref:`ByteArray <class_ByteArray>`: An array of bytes (integers from 0 to 255).
+- :ref:`IntArray <class_IntArray>`: An array of integers.
+- :ref:`FloatArray <class_FloatArray>`: An array of floats.
+- :ref:`StringArray <class_StringArray>`: An array of strings.
+- :ref:`Vector2Array <class_Vector2Array>`: An array of :ref:`Vector2 <class_Vector2>` objects.
+- :ref:`Vector3Array <class_Vector3Array>`: An array of :ref:`Vector3 <class_Vector3>` objects.
+- :ref:`ColorArray <class_ColorArray>`: An array of :ref:`Color <class_Color>` objects.
 
 :ref:`Dictionary <class_Dictionary>`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -383,56 +455,34 @@ Associative container which contains values referenced by unique keys.
 
     var d={4:5, "a key":"a value", 28:[1,2,3]}
     d["Hi!"] = 0
+    var d = {
+        22         : "Value",
+        "somekey"  : 2,
+        "otherkey" : [2,3,4],
+        "morekey"  : "Hello"
+    }
 
-Lua-style table syntax is also supported, given that it's easier to
-write and read:
+Lua-style table syntax is also supported. Lua-style uses ``=`` instead of ``:`` 
+and doesn't use quotes to mark string keys (making for slightly less to write). 
+Note however that like any GDScript identifier, keys written in this form cannot 
+start with a digit.
 
 ::
 
-
     var d = {
+        test22 = "Value", 
         somekey = 2,
         otherkey = [2,3,4],
         morekey = "Hello"
     }
 
-:ref:`ByteArray <class_ByteArray>`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To add a key to an existing dictionary, access it like an existing key and
+assign to it::
 
-An array of bytes can only contain bytes (integers from 0 to 255).
-
-This, and all of the following specialized array types, are optimized
-for memory usage and can't fragment the memory.
-
-:ref:`IntArray <class_IntArray>`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Array of integers can only contain integers.
-
-:ref:`FloatArray <class_FloatArray>`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Array of floats can only contain floats.
-
-:ref:`StringArray <class_StringArray>`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Array of strings can only contain strings.
-
-:ref:`Vector2Array <class_Vector2Array>`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Array of Vector2 can only contain 2D Vectors.
-
-:ref:`Vector3Array <class_Vector3Array>`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Array of Vector3 can only contain 3D Vectors.
-
-:ref:`ColorArray <class_ColorArray>`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Array of Color can only contains colors.
+    var d = {} # create an empty Dictionary
+    d.Waiting = 14 # add String "Waiting" as a key and assign the value 14 to it
+    d[4] = "hello" # add integer `4` as a key and assign the String "hello" as its value
+    d["Godot"] = 3.01 # add String "Godot" as a key and assign the value 3.01 to it
 
 Data
 ----
@@ -455,7 +505,7 @@ Constants
 ~~~~~~~~~
 
 Constants are similar to variables, but must be constants or constant
-expressions and must be assigned on initialization.
+expressions and must be assigned on initialization. 
 
 ::
 
@@ -470,13 +520,11 @@ expressions and must be assigned on initialization.
 Functions
 ~~~~~~~~~
 
-Functions always belong to a class. The scope priority for variable
-look-up is: local→class member→global. ``self`` is provided as an option
-for accessing class members, but is not always required (and must *not*
-be defined as the first parameter, like in Python). For performance
-reasons, functions are not considered class members, so they can't be
-referenced directly. A function can return at any point. The default
-return value is null.
+Functions always belong to a `class <Classes_>`_. The scope priority for
+variable look-up is: local → class member → global. The ``self`` variable is
+always available and is provided as an option for accessing class members, but
+is not always required (and should *not* be sent as the function's first
+argument, unlike Python).
 
 ::
 
@@ -485,8 +533,57 @@ return value is null.
         print(b)
         return a + b  # return is optional; without it null is returned
 
+A function can ``return`` at any point. The default return value is ``null``.
+
+Referencing Functions
+^^^^^^^^^^^^^^^^^^^^^
+
+To call a function in a *base class* (i.e. one ``extend``-ed in your current class),
+prepend ``.`` to the function name:
+
+::
+
+    .basefunc(args)
+
+Contrary to Python, functions are *not* first class objects in GDScript. This
+means they cannot be stored in variables, passed as an argument to another
+function or be returned from other functions. This is for performance reasons.
+
+To reference a function by name at runtime, (e.g. to store it in a variable, or
+pass it to another function as an argument) one must use the ``call`` or
+``funcref`` helpers::
+   
+    # Call a function by name in one step
+    mynode.call("myfunction", args)  
+
+    # Store a function reference 
+    var myfunc = funcref(mynode, "myfunction")
+    # Call stored function reference 
+    myfunc.call_func(args)
+
+
+Remember that default functions like  ``_init``, and most
+notifications such as ``_enter_tree``, ``_exit_tree``, ``_process``,
+``_fixed_process``, etc. are called in all base classes automatically.
+So there is only a need to call the function explicitly when overloading
+them in some way. 
+
+
+Static functions
+^^^^^^^^^^^^^^^^
+
+A function can be declared static. When a function is static it has no
+access to the instance member variables or ``self``. This is mainly
+useful to make libraries of helper functions:
+
+::
+
+    static func sum2(a, b):
+        return a + b
+
+
 Statements and control flow
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Statements are standard and can be assignments, function calls, control
 flow structures, etc (see below). ``;`` as a statement separator is
@@ -495,10 +592,10 @@ entirely optional.
 if/else/elif
 ^^^^^^^^^^^^
 
-Simple conditions are created by using the *if/else/elif* syntax.
-Parenthesis around statements is allowed, but not required. Given the
-nature of the tab-based indentation, elif can be used instead of
-else:/if: to maintain a level of indentation.
+Simple conditions are created by using the ``if``/``else``/``elif`` syntax.
+Parenthesis around conditions are allowed, but not required. Given the
+nature of the tab-based indentation, ``elif`` can be used instead of
+``else``/``if`` to maintain a level of indentation.
 
 ::
 
@@ -509,11 +606,18 @@ else:/if: to maintain a level of indentation.
     else:
         statement(s)
 
+Short statements can be written on the same line as the condition::
+
+    if (1 + 1 == 2): return 2 + 2
+    else:
+        var x = 3 + 3
+        return x
+
 while
 ^^^^^
 
-Simple loops are created by using *while* syntax. Loops can be broken
-using *break* or continued using *continue*:
+Simple loops are created by using ``while`` syntax. Loops can be broken
+using ``break`` or continued using ``continue``:
 
 ::
 
@@ -524,16 +628,18 @@ for
 ^^^
 
 To iterate through a range, such as an array or table, a *for* loop is
-used. For loops store the index in the loop variable on each iteration.
+used. When iterating over an array, the current array element is stored in
+the loop variable. When iterating over a dictionary, the *index* is stored
+in the loop variable.
 
 ::
 
-    for i in [0, 1, 2]:
-        statement  # loop iterates 3 times with i as 0, then 1 and finally 2
+    for x in [5, 7, 11]:
+        statement  # loop iterates 3 times with x as 5, then 7 and finally 11
 
     var dict = {"a":0, "b":1, "c":2}
     for i in dict:
-        print(dict[i])  # loop iterates the keys; with i being "a","b" and "c" it prints 0, 1 and 2.
+        print(dict[i])  # loop provides the keys in an arbitrary order; may print 0, 1, 2, or 2, 0, 1, etc...
 
     for i in range(3):
         statement  # similar to [0, 1, 2] but does not allocate an array
@@ -544,39 +650,24 @@ used. For loops store the index in the loop variable on each iteration.
     for i in range(2,8,2):
         statement  # similar to [2, 4, 6] but does not allocate an array
 
-Function call on base class
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To call a function on a base class (that was overridden in the current
-one), prepend ``.`` to the function name:
-
-::
-
-    .basefunc()
-
-However, remember that functions such as ``_init``, and most
-notifications such as ``_enter_tree``, ``_exit_tree``, ``_process``,
-``_fixed_process``, etc. are called in all base classes automatically,
-so this should be only for calling functions you write yourself.
 
 Classes
-^^^^^^^
+~~~~~~~
 
 By default, the body of a script file is an unnamed class and it can
 only be referenced externally as a resource or file. Class syntax is
 meant to be very compact and can only contain member variables or
 functions. Static functions are allowed, but not static members (this is
-in the spirit of thread safety since scripts can be initialized in
+in the spirit of thread safety, since scripts can be initialized in
 separate threads without the user knowing). In the same way, member
 variables (including arrays and dictionaries) are initialized every time
 an instance is created.
 
-Class file example
-~~~~~~~~~~~~~~~~~~
-
-Imagine the following being stored in a file like myclass.gd.
+Below is an example of a class file. 
 
 ::
+
+    # saved as a file named myclass.gd
 
     var a = 5
 
@@ -584,90 +675,92 @@ Imagine the following being stored in a file like myclass.gd.
         print(a)
 
 Inheritance
-~~~~~~~~~~~
+^^^^^^^^^^^
 
-A class file can inherit from a global class, another file or a subclass
-inside another file. Multiple inheritance is not allowed. The
-``extends`` syntax is used. Follows is 3 methods of using extends:
+A class (stored as a file) can inherit from 
+
+- A global class
+- Another class file 
+- An inner class inside another class file. 
+
+Multiple inheritance is not allowed. 
+
+Inheritance uses the ``extends`` keyword:
 
 ::
 
-    # extend from some class (global)
+    # Inherit/extend a globally available class
     extends SomeClass 
-
-::
-
-    # optionally, extend from another file
+    
+    # Inherit/extend a named class file
     extends "somefile.gd" 
+    
+    # Inherit/extend an inner class in another file
+    extends "somefile.gd".SomeInnerClass
+
+
+To check if a given instance inherits from a given class 
+the ``extends`` keyword can be used as an operator instead:
 
 ::
 
-    # extend from a subclass in another file
-    extends "somefile.gd".Subclass
-
-Inheritance testing
-~~~~~~~~~~~~~~~~~~~
-
-It's possible to check if an instance inherits from a given class. For
-this the ``extends`` keyword can be used as an operator instead:
-
-::
-
-    const enemy_class = preload("enemy.gd")  # cache the enemy class
+    # Cache the enemy class
+    const enemy_class = preload("enemy.gd")
 
     # [...]
 
+    # use 'extends' to check inheritance
     if (entity extends enemy_class):
         entity.apply_damage()
 
-Constructor
-~~~~~~~~~~~
+Class Constructor
+^^^^^^^^^^^^^^^^^
 
-A class can have an optional constructor; a function named ``_init``
-that is called when the class is instanced.
+The class constructor, called on class instantiation, is named ``_init``. 
+As mentioned earlier, the constructors of parent classes are called automatically when
+inheriting a class. So there is usually no need to call ``._init()`` explicitly.
 
-Arguments to parent constructor
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When inheriting, parent constructors are called automatically (no need
-to call ``._init()``). If a parent constructor takes arguments, they are
-passed like this:
+If a parent constructor takes arguments, they are passed like this:
 
 ::
 
-    func _init(args).(parentargs):
+    func _init(args).(parent_args):
        pass
 
-Sub classes
-~~~~~~~~~~~
+Inner classes
+^^^^^^^^^^^^^
 
-A class file can have subclasses. This syntax should be straightforward:
+A class file can contain inner classes. Inner classes are defined using the
+``class`` keyword. They are instanced using the ``ClassName.new()`` 
+function.
 
 ::
 
-    class SomeSubClass:
+    # inside a class file
+
+    # An inner class in this class file
+    class SomeInnerClass:
         var a = 5
         func print_value_of_a():
             print(a)
 
+    # This is the constructor of the class file's main class
     func _init():
-        var sc = SomeSubClass.new()  #instance by calling built-in new
-        sc.print_value_of_a()
+        var c = SomeInnerClass.new() 
+        c.print_value_of_a()
 
-Classes as objects
-~~~~~~~~~~~~~~~~~~
+Classes as resources
+^^^^^^^^^^^^^^^^^^^^
 
-It may be desired at some point to load a class from a file and then
-instance it. Since the global scope does not exist, classes must be
-loaded as a resource. Instancing is done by calling the ``new`` function
-in a class object:
+Classes stored as files are treated as :ref:`resources <class_GDScript>`. They
+must be loaded from disk to access them in other classes. This is done using
+either the ``load`` or ``preload`` functions (see below). Instancing of a loaded
+class resource is done by calling the ``new`` function on the class object::
 
-::
-
-    # load the class (loaded every time the script is instanced)
+    # Load the class resource when calling load()
     var MyClass = load("myclass.gd")
 
-    # alternatively, using the preload() function preloads the class at compile time
+    # Preload the class only once at compile time
     var MyClass2 = preload("myclass.gd")
 
     func _init():
@@ -678,76 +771,96 @@ Exports
 ~~~~~~~
 
 Class members can be exported. This means their value gets saved along
-with a scene. If class members have initializers to constant
-expressions, they will be available for editing in the property editor.
-Exporting is done by using the export keyword:
-
-::
+with the resource (e.g. the :ref:`scene <class_PackedScene>`) they're attached
+to. They will also be available for editing in the property editor. Exporting
+is done by using the ``export`` keyword::
 
     extends Button
 
-    export var data  # value will be saved
-    export var number = 5  # also available to the property editor
+    export var number = 5  # value will be saved and visible in the property editor
+
+An exported variable must be initialized to a constant expression or have an
+export hint in the form of an argument to the export keyword (see below).
 
 One of the fundamental benefits of exporting member variables is to have
-them visible in the property editor. This way artists and game designers
+them visible and editable in the editor. This way artists and game designers
 can modify values that later influence how the program runs. For this, a
-special export syntax is provided for more detail in the exported
-variables:
+special export syntax is provided.
 
 ::
 
-    # if the exported value assigns a constant or constant expression, the type will be inferred and used in the editor
+    # If the exported value assigns a constant or constant expression, 
+    # the type will be inferred and used in the editor
 
     export var number = 5
 
-    # export can take a basic data type as an argument which will be used in the editor
+    # Export can take a basic data type as an argument which will be 
+    # used in the editor
 
     export(int) var number
 
-    # export can also take a resource type to use as a hint
+    # Export can also take a resource type to use as a hint
 
     export(Texture) var character_face
 
-    # integers and strings hint enumerated values
+    # Integers and strings hint enumerated values
 
-    export(int, "Warrior", "Magician", "Thief") var character_class  # (editor will set them as 0, 1 and 2) 
+    # Editor will enumerate as 0, 1 and 2
+    export(int, "Warrior", "Magician", "Thief") var character_class   
+    # Editor will enumerate with string names 
     export(String, "Rebecca", "Mary", "Leah") var character_name 
 
-    # strings as paths
+    # Strings as paths
 
-    export(String, FILE) var f  # string is a path to a file
-    export(String, DIR) var f  # string is a path to a directory
-    export(String, FILE, "*.txt") var f  # string is a path to a file, custom filter provided as hint
+    # String is a path to a file
+    export(String, FILE) var f  
+    # String is a path to a directory
+    export(String, DIR) var f  
+    # String is a path to a file, custom filter provided as hint
+    export(String, FILE, "*.txt") var f  
 
-    # using paths in the global filesystem is also possible, but only in tool scripts (see further below)
+    # Using paths in the global filesystem is also possible, 
+    # but only in tool scripts (see further below)
 
-    export(String, FILE, GLOBAL, "*.png") var tool_image # string is a path to a PNG file in the global filesystem
-    export(String, DIR, GLOBAL) var tool_dir # string is a path to a directory in the global filesystem
+    # String is a path to a PNG file in the global filesystem
+    export(String, FILE, GLOBAL, "*.png") var tool_image 
+    # String is a path to a directory in the global filesystem
+    export(String, DIR, GLOBAL) var tool_dir
 
-    # multiline strings
+    # The MULTILINE setting tells the editor to show a large input 
+    # field for editing over multiple lines
+    export(String, MULTILINE) var text
 
-    export(String, MULTILINE) var text # display a large window to edit strings with multiple lines
+    # Limiting editor input ranges
 
-    # integers and floats hint ranges
+    # Allow integer values from 0 to 20
+    export(int, 20) var i  
+    # Allow integer values from -10 to 20 
+    export(int, -10, 20) var j 
+    # Allow floats from -10 to 20, with a step of 0.2
+    export(float, -10, 20, 0.2) var k 
+    # Allow values y = exp(x) where y varies betwee 100 and 1000 
+    # while snapping to steps of 20. The editor will present a 
+    # slider for easily editing the value. 
+    export(float, EXP, 100, 1000, 20) var l 
 
-    export(int, 20) var i  # 0 to 20 allowed
-    export(int, -10, 20) var j  # -10 to 20 allowed
-    export(float, -10, 20, 0.2) var k  # -10 to 20 allowed, with stepping of 0.2
-    export(float, EXP, 100, 1000, 20) var l  # exponential range, editing this property using the slider will set the value exponentially
+    # Floats with easing hint
 
-    # floats with easing hint
+    # Display a visual representation of the ease() function 
+    # when editing
+    export(float, EASE) var transition_speed 
 
-    export(float, EASE) var transition_speed # display a visual representation of the ease() function when editing
+    # Colors
 
-    # color can hint availability of alpha
-
+    # Color given as Red-Green-Blue value
     export(Color, RGB) var col  # Color is RGB
+    # Color given as Red-Green-Blue-Alpha value
     export(Color, RGBA) var col  # Color is RGBA
    
     # another node in the scene can be exported too
     
     export(NodePath) var node
+
 It must be noted that even if the script is not being run while at the
 editor, the exported properties are still editable (see below for
 "tool").
@@ -755,20 +868,22 @@ editor, the exported properties are still editable (see below for
 Exporting bit flags
 ^^^^^^^^^^^^^^^^^^^
 
-Integers used as bit flags can store multiple true/false (boolean)
+Integers used as bit flags can store multiple ``true``/``false`` (boolean)
 values in one property. By using the export hint ``int, FLAGS``, they
 can be set from the editor:
 
 ::
 
-    export(int, FLAGS) var spell_elements = ELEMENT_WIND | ELEMENT_WATER # individually edit the bits of an integer
+    # Individually edit the bits of an integer
+    export(int, FLAGS) var spell_elements = ELEMENT_WIND | ELEMENT_WATER 
 
 Restricting the flags to a certain number of named flags is also
 possible. The syntax is very similar to the enumeration syntax:
 
 ::
 
-    export(int, FLAGS, "Fire", "Water", "Earth", "Wind") var spell_elements = 0 # set any of the given flags from the editor
+    # Set any of the given flags from the editor
+    export(int, FLAGS, "Fire", "Water", "Earth", "Wind") var spell_elements = 0 
 
 In this example, ``Fire`` has value 1, ``Water`` has value 2, ``Earth``
 has value 4 and ``Wind`` corresponds to value 8. Usually, constants
@@ -781,8 +896,8 @@ doubt, boolean variables should be exported instead.
 Exporting arrays
 ^^^^^^^^^^^^^^^^
 
-Exporting arrays works too but there is a restriction. While regular
-arrays are created local to every instance, exported arrays are shared
+Exporting arrays works but with an important caveat: While regular
+arrays are created local to every class instance, exported arrays are *shared*
 between all instances. This means that editing them in one instance will
 cause them to change in all other instances. Exported arrays can have
 initializers, but they must be constant expressions.
@@ -805,43 +920,26 @@ initializers, but they must be constant expressions.
 
     var b = [a,2,3]
 
-Static functions
-~~~~~~~~~~~~~~~~
-
-A function can be declared static. When a function is static it has no
-access to the instance member variables or ``self``. This is mainly
-useful to make libraries of helper functions:
-
-::
-
-    static func sum2(a, b):
-        return a + b
 
 Setters/getters
 ~~~~~~~~~~~~~~~
 
-It is often useful to know when an member variable changed. It may
-also be desired to encapsulate its access. For this, GDScript provides
-a *setter_/_getter* helper using the ``setget`` keyword.
+It is often useful to know when a class' member variable changes for 
+whatever reason. It may also be desired to encapsulate its access in some way. 
 
-Just add it at the end of the variable definition line like this:
-
-::
-
-    var myinteger = 5 setget myinteger_changed
-
-If the value of ``myinteger`` is modified *externally* (not from local
-usage in the class), the *setter* function will be called beforehand.
-The *setter* must, then, decide what to do with the new value. The
-*setter function* looks like this:
+For this, GDScript provides a *setter/getter* syntax using the ``setget`` keyword. 
+It is used directly after a variable definition:
 
 ::
 
-    func myinteger_changed(newvalue):
-        myinteger=newvalue
+    var variable = value setget setterfunc, getterfunc
 
-A *setter* and a *getter* can be used together too, just define both of
-them:
+Whenever the value of ``variable`` is modified by an *external* source 
+(i.e. not from local usage in the class), the *setter* function (``setterfunc`` above)
+will be called. This happens *before* the value is changed. The *setter* must decide what to do 
+with the new value. Vice-versa, when ``variable`` is accessed, the *getter* function 
+(``getterfunc`` above) must ``return`` the desired value. Below is an example: 
+
 
 ::
 
@@ -853,25 +951,29 @@ them:
     func myvar_get():
         return myvar # getter must return a value
 
-Using simply a *getter* is possible too, just skip the setter:
+Either of the *setter* or *getter* functions can be omitted:
 
 ::
 
-    var myvar setget ,myvar_get
+    # Only a setter
+    var myvar = 5 setget myvar_set
+    # Only a getter (note the comma)
+    var myvar = 5 setget ,myvar_get
 
-This is especially useful when exporting variables to editor in tool
+Get/Setters are especially useful when exporting variables to editor in tool
 scripts or plugins, for validating input.
 
-Note: As mentioned before, local access will not trigger the setter and
-getter. For example:
+As said *local* access will *not* trigger the setter and getter. Here is an 
+illustration of this: 
 
 ::
 
     func _init():
-    #does not trigger setter/getter
+        # Does not trigger setter/getter
         myinteger=5
         print(myinteger)
-    #triggers setter/getter
+        
+        # Does trigger setter/getter
         self.myinteger=5
         print(self.myinteger)
 
@@ -903,33 +1005,19 @@ must inherit :ref:`class_Object` manually and must call instance.free(). To
 avoid reference cycles that can't be freed, a ``weakref`` function is
 provided for creating weak references.
 
-Function references
-~~~~~~~~~~~~~~~~~~~
-
-Functions can't be referenced because they are not treated as class
-members. There are two alternatives to this, though. The ``call``
-function or the ``funcref`` helper.
-
-::
-
-    instance.call("funcname", args)  # call a function by name
-
-    var fr = funcref(instance, "funcname")  # create a function ref
-    fr.call_func(args)
 
 Signals
 ~~~~~~~
 
 It is often desired to send a notification that something happened in an
 instance. GDScript supports creation of built-in Godot signals.
-Declaring a signal in GDScript is easy, in the body of the class, just
-write:
+Declaring a signal in GDScript is easy using the `signal` keyword. 
 
 ::
 
-    # no arguments
+    # No arguments
     signal your_signal_name
-    # with arguments
+    # With arguments
     signal your_signal_name_with_args(a,b)
 
 These signals, just like regular signals, can be connected in the editor
@@ -945,8 +1033,8 @@ declared and connect it to the method of another instance:
         print("Got callback with args! a: ",a," and b: ",b)
 
     func _at_some_func():
-        instance.connect("your_signal_name",self,"callback_no_args")
-        instance.connect("your_signal_name_with_args",self,"callback_args")
+        instance.connect("your_signal_name",self,"_callback_no_args")
+        instance.connect("your_signal_name_with_args",self,"_callback_args")
 
 It is also possible to bind arguments to a signal that lacks them with
 your custom values:
@@ -954,7 +1042,7 @@ your custom values:
 ::
 
     func _at_some_func():
-        instance.connect("your_signal_name_with_args",self,"callback_no_args",[22,"hello"])
+        instance.connect("your_signal_name",self,"_callback_args",[22,"hello"])
 
 This is very useful when a signal from many objects is connected to a
 single callback and the sender must be identified:
@@ -981,8 +1069,8 @@ Object.emit_signal method:
 Coroutines
 ~~~~~~~~~~
 
-GDScript has some support for coroutines via the ``yield`` built-in
-function. The way it works is very simple: Calling ``yield()`` will
+GDScript offers support for `coroutines <https://en.wikipedia.org/wiki/Coroutine>`_ 
+via the ``yield`` built-in function. Calling ``yield()`` will
 immediately return from the current function, with the current frozen
 state of the same function as the return value. Calling ``resume`` on
 this resulting object will continue execution and return whatever the
@@ -1000,7 +1088,7 @@ an example:
     func _ready():
 
         var y = myfunc()
-        #function state saved in 'y'
+        # Function state saved in 'y'
         print("my dear")
         y.resume()
         # 'y' resumed and is now an invalid state
@@ -1027,7 +1115,7 @@ example:
     func _ready():
 
         var y = myfunc()
-        #function state saved in 'y'
+        # Function state saved in 'y'
         print( y.resume("world") )
         # 'y' resumed and is now an invalid state
 
@@ -1040,20 +1128,22 @@ Will print:
     cheers!
 
 Coroutines & signals
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 The real strength of using ``yield`` is when combined with signals.
 ``yield`` can accept two parameters, an object and a signal. When the
-signal is activated, execution will return. Here are some examples:
+signal is received, execution will recommence. Here are some examples:
 
 ::
 
-    #resume execution the next frame
+    # Resume execution the next frame
     yield( get_tree(), "idle_frame" )
 
-    #resume execution when animation is done playing:
+    # Resume execution when animation is done playing:
     yield( get_node("AnimationPlayer"), "finished" )
 
+    # Wait 5 seconds, then resume execution (Godot 2.2+)
+    yield( get_tree().create_timer(5.0), "timeout" )
 
 Onready keyword
 ~~~~~~~~~~~~~~~

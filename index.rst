@@ -6,6 +6,13 @@
 Welcome to Godot Engine's documentation!
 ========================================
 
+**Note:** Godot Engine is an open source project developed by a community of volunteers.
+It means that the documentation team can always use your feedback and help to improve our
+tutorials and class reference. So if you don't manage to understand something, or can't find
+what you are looking for in the docs, help us make the documentation better and let us know!
+Submit an issue `to the GitHub repository <https://github.com/godotengine/godot-docs/issues>`_,
+or annoy us at the #godotengine-devel IRC channel!
+
 The main documentation for the site is organized into a few sections:
 
 * :ref:`sec-tutorials`

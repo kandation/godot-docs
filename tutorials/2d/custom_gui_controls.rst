@@ -80,7 +80,7 @@ Or alternatively, set it via function:
 Input
 -----
 
-Controls provide a few helpers to make managing input events much esier
+Controls provide a few helpers to make managing input events much easier
 than regular nodes.
 
 Input events
@@ -91,8 +91,8 @@ mentioning that controls have a special input method that only works
 when:
 
 -  The mouse pointer is over the control.
--  The left button was pressed over this control (control always
-   captures input until button si released)
+-  The button was pressed over this control (control always
+   captures input until button is released)
 -  Control provides keyboard/joypad focus via
    :ref:`Control.set_focus_mode() <class_Control_set_focus_mode>`.
 
@@ -135,9 +135,6 @@ exists, but can be checked with the _notification callback:
        elif (what==NOTIFICATION_VISIBILITY_CHANGED):
           pass # control became visible/invisible
           # check new status with is_visible()
-       elif (what==NOTIFICATION_THEME_CHANGED):
-          pass # theme used to draw the control changed
-          # update and redraw is recommended if using a theme
        elif (what==NOTIFICATION_RESIZED):
           pass # control changed size, check new size
           # with get_size()
